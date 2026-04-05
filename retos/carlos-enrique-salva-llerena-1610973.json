@@ -1,0 +1,70 @@
+{
+  "alumno": "Carlos Enrique Salva Llerena",
+  "codigo": "1610973",
+  "token_entrega": "4C943743ACED",
+  "generado_en_utc": "2026-04-05T16:04:29.938345+00:00",
+  "reglas_entrega": {
+    "rama_git_obligatoria": "alumno/carlos-enrique-salva-llerena-4c94",
+    "nombre_archivo_reflexion": "REFLEXION_4C943743ACED.md",
+    "incluir_token_en_readme": true,
+    "incluir_token_en_commit_final": true
+  },
+  "parametros_unicos": {
+    "stock_minimo_pelicula": 2,
+    "mora_por_dia_soles": 3,
+    "limite_alquileres_pendientes": 3,
+    "dias_maximo_retraso": 4,
+    "prefijo_slug_obligatorio": "carlos-76"
+  },
+  "retos_asignados": [
+    {
+      "id": 2,
+      "titulo": "Reto Django #2"
+    },
+    {
+      "id": 3,
+      "titulo": "Reto Django #3"
+    },
+    {
+      "id": 12,
+      "titulo": "Reto Django #12"
+    },
+    {
+      "id": 14,
+      "titulo": "Reto Django #14"
+    },
+    {
+      "id": 24,
+      "titulo": "Reto Django #24"
+    },
+    {
+      "id": 29,
+      "titulo": "Reto Django #29"
+    },
+    {
+      "id": 38,
+      "titulo": "Reto Django #38"
+    },
+    {
+      "id": 53,
+      "titulo": "Reto Django #53"
+    },
+    {
+      "id": 65,
+      "titulo": "Reto Django #65"
+    },
+    {
+      "id": 70,
+      "titulo": "Reto Django #70"
+    },
+    {
+      "id": 72,
+      "titulo": "Reto Django #72"
+    },
+    {
+      "id": 82,
+      "titulo": "Reto Django #82"
+    }
+  ],
+  "instruccion_docente": "Pide al alumno que implemente solo estos retos. Si otro repo tiene token o parámetros distintos, se considera copia."
+}
