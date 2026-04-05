@@ -1,0 +1,31 @@
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\django-alquiler-1\venv\Lib\site-packages\django\contrib\messages\api.py", line 27, in add_message
+    messages = request._messages
+               ^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute '_messages'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\django-alquiler-1\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\django-alquiler-1\tienda\middleware.py", line 37, in __call__
+    messages.warning(request, "Tu sesión se cerró por inactividad.")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\django-alquiler-1\venv\Lib\site-packages\django\contrib\messages\api.py", line 110, in warning
+    add_message(
+    ~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<3 lines>...
+        fail_silently=fail_silently,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\django-alquiler-1\venv\Lib\site-packages\django\contrib\messages\api.py", line 35, in add_message
+    raise MessageFailure(
+    ...<2 lines>...
+    )
+django.contrib.messages.api.MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+"GET / HTTP/1.1" 500 78945

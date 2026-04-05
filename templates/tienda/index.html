@@ -17,24 +17,83 @@
             <div style="font-size: 14px; color: #6b7280">Alquileres pendientes</div>
             <div style="font-size: 28px; font-weight: 700">{{ alquileres_pendientes }}</div>
         </div>
-            <div class="card">
+        <div class="card">
             <div style="font-size: 14px; color: #6b7280">Ingresos (ventas)</div>
-                <div style="font-size: 28px; font-weight: 700">{{ ingresos|soles }}</div>
+            <div style="font-size: 28px; font-weight: 700">{{ ingresos|soles }}</div>
+            <div class="help">Ticket promedio: {{ ticket_promedio|soles }}</div>
         </div>
     </div>
 
     <div class="card">
         <h2 style="margin-top: 0">Acciones rápidas</h2>
         <div class="actions">
-            <a class="btn" href="{% url 'categoria_create' %}">Nueva categoría</a>
-            <a class="btn" href="{% url 'pelicula_create' %}" style="background: #16a34a">Nueva película</a>
-            <a class="btn" href="{% url 'cliente_create' %}" style="background: #8b5cf6">Nuevo cliente</a>
-            <a class="btn" href="{% url 'alquiler_create' %}" style="background: #f59e0b">Nuevo alquiler</a>
-            <a class="btn secondary" href="{% url 'ventas_simular' %}">Simular ventas</a>
+            <a class="btn" href="{% url 'tienda:categoria_create' %}">Nueva categoría</a>
+            <a class="btn" href="{% url 'tienda:pelicula_create' %}" style="background: #16a34a">Nueva película</a>
+            <a class="btn" href="{% url 'tienda:cliente_create' %}" style="background: #8b5cf6">Nuevo cliente</a>
+            <a class="btn" href="{% url 'tienda:alquiler_create' %}" style="background: #f59e0b">Nuevo alquiler</a>
+            <a class="btn secondary" href="{% url 'tienda:ventas_simular' %}">Simular ventas</a>
         </div>
         <p class="help" style="margin-bottom: 0">
             En esta versión, una “venta” es un <b>alquiler marcado como pagado</b>.
         </p>
     </div>
+
+    <div class="row">
+        <div class="card">
+            <h3 style="margin-top: 0">Top 10 películas</h3>
+            {% for pelicula in top_peliculas %}
+                <div>{{ pelicula.titulo }} <span class="help">({{ pelicula.total_alquileres }})</span></div>
+            {% empty %}
+                <div class="help">Sin datos todavía.</div>
+            {% endfor %}
+        </div>
+        <div class="card">
+            <h3 style="margin-top: 0">Clientes sin alquileres</h3>
+            {% for cliente in clientes_sin_alquileres|slice:":10" %}
+                <div>{{ cliente.nombre }}</div>
+            {% empty %}
+                <div class="help">Todos los clientes ya alquilaron.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <h3 style="margin-top: 0">Ingresos por categoría</h3>
+            {% for item in ingresos_por_categoria %}
+                <div>{{ item.nombre }}: {{ item.total|default:0|soles }}</div>
+            {% empty %}
+                <div class="help">Sin ingresos registrados.</div>
+            {% endfor %}
+        </div>
+        <div class="card">
+            <h3 style="margin-top: 0">Ranking mensual de clientes</h3>
+            {% for cliente in ranking_mensual_clientes %}
+                <div>{{ cliente.nombre }}: {{ cliente.gasto_mes|soles }}</div>
+            {% empty %}
+                <div class="help">Sin ventas este mes.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <h3 style="margin-top: 0">Alquileres vencidos</h3>
+            {% for alquiler in alquileres_vencidos|slice:":10" %}
+                <div>{{ alquiler.fecha_alquiler }} - {{ alquiler.cliente.nombre }} - {{ alquiler.pelicula.titulo }}</div>
+            {% empty %}
+                <div class="help">No hay alquileres vencidos.</div>
+            {% endfor %}
+        </div>
+        <div class="card">
+            <h3 style="margin-top: 0">Ventas por día</h3>
+            {% for item in ventas_por_dia %}
+                <div>{{ item.dia|date:"Y-m-d" }}: {{ item.total|soles }} <span class="help">({{ item.cantidad }})</span></div>
+            {% empty %}
+                <div class="help">Sin ventas en el rango actual.</div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
+
 

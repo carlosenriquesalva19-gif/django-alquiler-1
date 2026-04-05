@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load soles %}
+
+{% block title %}Detalle de película{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 style="margin-top: 0">{{ pelicula.titulo }}</h2>
+        <p>
+            <b>Slug:</b> {{ pelicula.slug }}<br />
+            <b>Categoría:</b> {{ pelicula.categoria.nombre }}<br />
+            <b>Año:</b> {{ pelicula.anio }}<br />
+            <b>Director:</b> {{ pelicula.director|default:"-" }}<br />
+            <b>País:</b> {{ pelicula.pais_origen|default:"-" }}<br />
+            <b>Duración:</b> {{ pelicula.duracion_minutos }} min<br />
+            <b>Precio:</b> {{ pelicula.precio_alquiler|soles }}<br />
+            <b>Stock:</b> {{ pelicula.stock }}<br />
+            <b>Veces alquilada:</b> {{ pelicula.total_alquileres|default:0 }}
+        </p>
+    </div>
+{% endblock %}

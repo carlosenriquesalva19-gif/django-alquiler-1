@@ -1,0 +1,21 @@
+[
+  {
+    "model": "tienda.categoria",
+    "pk": 1,
+    "fields": {
+      "nombre": "Acción",
+      "descripcion": "Base de pruebas",
+      "is_active": true
+    }
+  },
+  {
+    "model": "tienda.metodopago",
+    "pk": 1,
+    "fields": {
+      "nombre": "Efectivo",
+      "descripcion": "Fixture",
+      "activo": true,
+      "is_active": true
+    }
+  }
+]

@@ -6,7 +6,12 @@
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
             <h2 style="margin: 0">Categorías</h2>
-            <a class="btn" href="{% url 'categoria_create' %}">Nueva categoría</a>
+            <a class="btn" href="{% url 'tienda:categoria_create' %}">Nueva categoría</a>
+        </div>
+        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap">
+            <a class="btn secondary" href="{% url 'tienda:categoria_list' %}?estado_lista=activos">Activas</a>
+            <a class="btn secondary" href="{% url 'tienda:categoria_list' %}?estado_lista=inactivos">Inactivas</a>
+            <a class="btn secondary" href="{% url 'tienda:categoria_list' %}?estado_lista=todos">Todas</a>
         </div>
         <div style="margin-top: 12px">
             <table>
@@ -14,6 +19,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
+                        <th>Estado</th>
                         <th style="width: 220px">Acciones</th>
                     </tr>
                 </thead>
@@ -22,19 +28,40 @@
                         <tr>
                             <td>{{ categoria.nombre }}</td>
                             <td>{{ categoria.descripcion|default_if_none:"" }}</td>
+                            <td>{% if categoria.is_active %}Activa{% else %}Inactiva{% endif %}</td>
                             <td class="actions">
-                                <a class="btn secondary" href="{% url 'categoria_update' categoria.pk %}">Editar</a>
-                                <a class="btn danger" href="{% url 'categoria_delete' categoria.pk %}">Borrar</a>
+                                {% if categoria.is_active %}
+                                    <a class="btn secondary" href="{% url 'tienda:categoria_update' categoria.pk %}?next={{ request.get_full_path|urlencode }}">Editar</a>
+                                    <a class="btn danger" href="{% url 'tienda:categoria_delete' categoria.pk %}?next={{ request.get_full_path|urlencode }}">Borrar</a>
+                                {% else %}
+                                    <form method="post" action="{% url 'tienda:categoria_restore' categoria.pk %}" style="display: inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+                                        <button class="btn secondary" type="submit">Restaurar</button>
+                                    </form>
+                                {% endif %}
                             </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="help">No hay categorías todavía.</td>
+                            <td colspan="4" class="help">No hay categorías todavía.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        {% if is_paginated %}
+            <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+                {% if page_obj.has_previous %}
+                    <a class="btn secondary" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Anterior</a>
+                {% endif %}
+                <div class="help">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</div>
+                {% if page_obj.has_next %}
+                    <a class="btn secondary" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Siguiente</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
+
 

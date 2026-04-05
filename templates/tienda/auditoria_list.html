@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Auditoría{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 style="margin-top: 0">Auditoría</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in eventos %}
+                    <tr>
+                        <td>{{ evento.creado_en }}</td>
+                        <td>{{ evento.tipo }}</td>
+                        <td>{{ evento.descripcion }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="3" class="help">Sin eventos registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

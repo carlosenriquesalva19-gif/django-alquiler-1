@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Error interno{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 style="margin-top: 0">Ocurrió un error interno</h2>
+        <p>El servidor no pudo completar la operación. Revisa logs o inténtalo de nuevo.</p>
+        <a class="btn" href="{% url 'tienda:index' %}">Volver al inicio</a>
+    </div>
+{% endblock %}
+

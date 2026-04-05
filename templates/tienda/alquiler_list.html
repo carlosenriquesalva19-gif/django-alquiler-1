@@ -7,13 +7,22 @@
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
             <h2 style="margin: 0">Alquileres</h2>
-            <a class="btn" href="{% url 'alquiler_create' %}">Nuevo alquiler</a>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                <a class="btn secondary" href="{% url 'tienda:alquiler_cobro_masivo' %}">Cobro masivo</a>
+                <a class="btn" href="{% url 'tienda:alquiler_create' %}">Nuevo alquiler</a>
+            </div>
         </div>
 
+        <form method="get" style="margin-top: 12px">
+            {{ busqueda_form.as_p }}
+            <button class="btn secondary" type="submit">Buscar</button>
+        </form>
+
         <div style="margin-top: 12px; margin-bottom: 12px">
-            <a class="btn secondary" href="{% url 'alquiler_list' %}">Todos</a>
-            <a class="btn secondary" href="{% url 'alquiler_list' %}?pagado=0">Pendientes</a>
-            <a class="btn secondary" href="{% url 'alquiler_list' %}?pagado=1">Pagados</a>
+            <a class="btn secondary" href="{% url 'tienda:alquiler_list' %}">Todos</a>
+            <a class="btn secondary" href="{% url 'tienda:alquiler_list' %}?estado=pendiente">Pendientes</a>
+            <a class="btn secondary" href="{% url 'tienda:alquiler_list' %}?estado=pagado">Pagados</a>
+            <a class="btn secondary" href="{% url 'tienda:alquiler_list' %}?estado=anulado">Anulados</a>
         </div>
 
         <div>
@@ -40,16 +49,21 @@
                             <td>{{ alquiler.pelicula.categoria.nombre }}</td>
                             <td>{{ alquiler.precio|soles }}</td>
                             <td>
-                                {% if alquiler.pagado %}
+                                {% if alquiler.estado == "pagado" %}
                                     <b style="color: #16a34a">Pagado</b>
+                                    {% if alquiler.fecha_pago %}<div class="help">Pago: {{ alquiler.fecha_pago }}</div>{% endif %}
                                     {% if alquiler.fecha_devolucion %}<div class="help">Devuelto: {{ alquiler.fecha_devolucion }}</div>{% endif %}
+                                {% elif alquiler.estado == "anulado" %}
+                                    <b style="color: #dc2626">Anulado</b>
                                 {% else %}
                                     <b style="color: #f59e0b">Pendiente</b>
                                 {% endif %}
                             </td>
                             <td class="actions">
-                                {% if not alquiler.pagado %}
-                                    <a class="btn" href="{% url 'alquiler_marcar_pagado' alquiler.pk %}">Marcar pagado</a>
+                                {% if alquiler.estado == "pendiente" %}
+                                    <a class="btn" href="{% url 'tienda:alquiler_marcar_pagado' alquiler.pk %}?next={{ request.get_full_path|urlencode }}">Marcar pagado</a>
+                                {% elif alquiler.estado == "anulado" %}
+                                    <span class="help">No disponible</span>
                                 {% else %}
                                     <span class="help">Ya cuenta como venta</span>
                                 {% endif %}
@@ -68,17 +82,18 @@
             <div style="margin-top: 14px">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
                     {% if page_obj.has_previous %}
-                        <a class="btn secondary" href="?page={{ page_obj.previous_page_number }}{% if request.GET.pagado %}&pagado={{ request.GET.pagado }}{% endif %}">Anterior</a>
+                        <a class="btn secondary" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Anterior</a>
                     {% endif %}
                     <div class="help">
                         Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
                     </div>
                     {% if page_obj.has_next %}
-                        <a class="btn secondary" href="?page={{ page_obj.next_page_number }}{% if request.GET.pagado %}&pagado={{ request.GET.pagado }}{% endif %}">Siguiente</a>
+                        <a class="btn secondary" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Siguiente</a>
                     {% endif %}
                 </div>
             </div>
         {% endif %}
     </div>
 {% endblock %}
+
 

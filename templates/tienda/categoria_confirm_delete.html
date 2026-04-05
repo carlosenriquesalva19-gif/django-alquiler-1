@@ -9,9 +9,15 @@
 
         <form method="post">
             {% csrf_token %}
-            <button class="btn danger" type="submit">Borrar</button>
-            <a class="btn secondary" href="{% url 'categoria_list' %}" style="margin-left: 8px">Cancelar</a>
+            <input type="hidden" name="next" value="{{ next_url|default:'' }}" />
+            <button class="btn danger" type="submit">Desactivar</button>
+            {% if next_url %}
+                <a class="btn secondary" href="{{ next_url }}" style="margin-left: 8px">Cancelar</a>
+            {% else %}
+                <a class="btn secondary" href="{% url 'tienda:categoria_list' %}" style="margin-left: 8px">Cancelar</a>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
+
 

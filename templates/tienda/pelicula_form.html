@@ -10,10 +10,17 @@
 
         <form method="post">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url|default:'' }}" />
+            {{ form.non_field_errors }}
             {{ form.as_p }}
             <button class="btn" type="submit">Guardar</button>
-            <a class="btn secondary" href="{% url 'pelicula_list' %}" style="margin-left: 8px">Cancelar</a>
+            {% if next_url %}
+                <a class="btn secondary" href="{{ next_url }}" style="margin-left: 8px">Volver al listado filtrado</a>
+            {% else %}
+                <a class="btn secondary" href="{% url 'tienda:pelicula_list' %}" style="margin-left: 8px">Cancelar</a>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
+
 

@@ -462,3 +462,85 @@ Rúbrica simple (10 puntos):
 ## 15. Licencia y uso educativo
 
 Proyecto pensado para **uso educativo**. Si se publica, conviene aclarar versión de Python/Django y si `db.sqlite3` se ignora en Git (lo habitual).
+
+---
+
+## 16. Notas de ampliación
+
+### 16.1. Consultas ORM avanzadas incorporadas
+
+- Top 10 películas más alquiladas con `annotate(Count("alquileres"))`
+- Ingresos por categoría con `values(...).annotate(Sum(...))`
+- Clientes sin alquileres con `annotate(Count(...)).filter(total_alquileres=0)`
+- Ticket promedio con `Avg("precio")`
+- Ventas por día con `TruncDay("fecha_pago")`
+- Ranking mensual de clientes por gasto total con `Sum(..., filter=Q(...))`
+
+### 16.2. Optimización de consultas
+
+En listados y detalles se usan `select_related()` y `prefetch_related()` para evitar consultas N+1.
+
+Comparación conceptual:
+
+- Sin optimización:
+  - listado de alquileres
+  - por cada fila se consulta cliente, película y categoría por separado
+- Con optimización:
+  - `select_related("cliente", "pelicula", "pelicula__categoria", "metodo_pago")`
+  - la mayor parte de la información se resuelve en una sola consulta SQL
+
+### 16.3. Atajos útiles del admin
+
+1. Buscar clientes por nombre, DNI o correo.
+2. Buscar películas por título, slug o director.
+3. Filtrar alquileres por estado.
+4. Filtrar alquileres por método de pago.
+5. Ver alquileres inline desde el cliente.
+6. Marcar alquileres pagados en lote.
+7. Usar `autocomplete_fields` en relaciones grandes.
+8. Consultar el total gastado por cliente desde el admin.
+9. Revisar eventos de dominio desde `EventoDominio`.
+10. Respetar campos de solo lectura en alquileres pagados si no eres superusuario.
+
+### 16.4. Procedimiento de release
+
+1. Ejecutar `python manage.py check`.
+2. Ejecutar `python manage.py test`.
+3. Crear backup con `python manage.py backup_sqlite`.
+4. Aplicar migraciones con `python manage.py migrate`.
+5. Crear o actualizar grupos con `python manage.py setup_roles`.
+6. Verificar panel admin y rutas principales.
+7. Desplegar.
+
+### 16.5. Plan de rollback
+
+1. Detener la aplicación.
+2. Restaurar el backup más reciente con `python manage.py restore_backup <ruta> --force`.
+3. Volver a la versión previa del código.
+4. Ejecutar `python manage.py check`.
+5. Levantar el servicio y verificar rutas críticas.
+
+### 16.6. Checklist final de calidad
+
+- Migraciones generadas y aplicadas.
+- `check` sin errores.
+- Tests verdes.
+- Backup reciente disponible.
+- Roles `cajero` y `supervisor` creados.
+- Logging activo.
+- Variables de entorno definidas.
+- Documentación de release y rollback actualizada.
+- Navegación y formularios críticos verificados.
+- Admin revisado.
+
+### 16.7. Cobertura mínima sugerida
+
+- Objetivo mínimo de cobertura: `70%`.
+- Archivo de configuración incluido: `.coveragerc`.
+- Ejecución sugerida:
+
+```bash
+coverage run manage.py test
+coverage report
+```
+

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}No encontrado{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 style="margin-top: 0">Página no encontrada</h2>
+        <p>La ruta solicitada no existe o ya no está disponible.</p>
+        <a class="btn" href="{% url 'tienda:index' %}">Volver al inicio</a>
+    </div>
+{% endblock %}
+

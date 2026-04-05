@@ -8,13 +8,15 @@
 
         <form method="post">
             {% csrf_token %}
+            {{ form.non_field_errors }}
             {{ form.as_p }}
             <button class="btn" type="submit">Crear alquiler</button>
-            <a class="btn secondary" href="{% url 'alquiler_list' %}" style="margin-left: 8px">Cancelar</a>
+            <a class="btn secondary" href="{% url 'tienda:alquiler_list' %}" style="margin-left: 8px">Cancelar</a>
         </form>
         <p class="help" style="margin-bottom: 0; margin-top: 12px">
-            Después podrás marcar el alquiler como pagado para que cuente como una venta.
+            Solo se pueden alquilar películas con stock disponible. Después podrás marcar el alquiler como pagado para que cuente como una venta.
         </p>
     </div>
 {% endblock %}
+
 

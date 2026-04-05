@@ -19,5 +19,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tienda.urls')),
+    path('', include(('tienda.urls', 'tienda'), namespace='tienda')),
 ]
+
+handler404 = "tienda.error_views.error_404"
+handler500 = "tienda.error_views.error_500"

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Actualizar precios{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 style="margin-top: 0">Actualizar precios por categoría</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+            <button class="btn" type="submit">Aplicar cambio</button>
+            <a class="btn secondary" href="{% url 'tienda:pelicula_list' %}" style="margin-left: 8px">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}
+

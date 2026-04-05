@@ -1,0 +1,10 @@
+[run]
+source = tienda, alquiler_site
+omit =
+    */migrations/*
+    manage.py
+    */tests.py
+
+[report]
+fail_under = 70
+show_missing = True

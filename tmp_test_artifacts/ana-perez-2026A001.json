@@ -1,0 +1,46 @@
+{
+  "alumno": "Ana Perez",
+  "codigo": "2026A001",
+  "token_entrega": "ADFF95A19587",
+  "generado_en_utc": "2026-04-04T21:32:02.246425+00:00",
+  "reglas_entrega": {
+    "rama_git_obligatoria": "alumno/ana-perez-adff",
+    "nombre_archivo_reflexion": "REFLEXION_ADFF95A19587.md",
+    "incluir_token_en_readme": true,
+    "incluir_token_en_commit_final": true
+  },
+  "parametros_unicos": {
+    "stock_minimo_pelicula": 4,
+    "mora_por_dia_soles": 2,
+    "limite_alquileres_pendientes": 3,
+    "dias_maximo_retraso": 10,
+    "prefijo_slug_obligatorio": "ana-pe-31"
+  },
+  "retos_asignados": [
+    {
+      "id": 11,
+      "titulo": "Reto Django #11"
+    },
+    {
+      "id": 24,
+      "titulo": "Reto Django #24"
+    },
+    {
+      "id": 45,
+      "titulo": "Reto Django #45"
+    },
+    {
+      "id": 47,
+      "titulo": "Reto Django #47"
+    },
+    {
+      "id": 59,
+      "titulo": "Reto Django #59"
+    },
+    {
+      "id": 70,
+      "titulo": "Reto Django #70"
+    }
+  ],
+  "instruccion_docente": "Pide al alumno que implemente solo estos retos. Si otro repo tiene token o parámetros distintos, se considera copia."
+}

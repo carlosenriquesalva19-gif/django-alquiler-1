@@ -7,8 +7,27 @@
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
             <h2 style="margin: 0">Ventas</h2>
-            <a class="btn secondary" href="{% url 'ventas_simular' %}">Simular ventas</a>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                <a class="btn secondary" href="{% url 'tienda:ventas_export_csv' %}?{{ querystring }}">Exportar CSV</a>
+                <a class="btn secondary" href="{% url 'tienda:ventas_simular' %}">Simular ventas</a>
+            </div>
         </div>
+
+        <form method="get" style="margin-top: 12px">
+            <div class="row">
+                <div>
+                    <label for="id_desde">Desde</label>
+                    <input id="id_desde" type="date" name="desde" value="{{ request.GET.desde|default:'' }}" />
+                </div>
+                <div>
+                    <label for="id_hasta">Hasta</label>
+                    <input id="id_hasta" type="date" name="hasta" value="{{ request.GET.hasta|default:'' }}" />
+                </div>
+                <div style="align-self: end">
+                    <button class="btn secondary" type="submit">Filtrar</button>
+                </div>
+            </div>
+        </form>
 
         <div style="margin-top: 12px">
                 <p style="margin: 0 0 12px 0">
@@ -42,6 +61,18 @@
                 </tbody>
             </table>
         </div>
+        {% if is_paginated %}
+            <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+                {% if page_obj.has_previous %}
+                    <a class="btn secondary" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Anterior</a>
+                {% endif %}
+                <div class="help">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</div>
+                {% if page_obj.has_next %}
+                    <a class="btn secondary" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Siguiente</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
+
 
